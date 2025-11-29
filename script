@@ -1,0 +1,370 @@
+﻿USE [Theater]
+GO
+/****** Object:  Table [dbo].[BOOKING]    Script Date: 2025-11-28 오후 10:11:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BOOKING](
+	[Booking_ID] [int] IDENTITY(1,1) NOT NULL,
+	[User_ID] [int] NULL,
+	[Schedule_ID] [int] NULL,
+	[Seat_Row] [nvarchar](255) NULL,
+	[Seat_Col] [nvarchar](255) NULL,
+	[Booking_Time] [datetime2](0) NULL,
+	[Total_Price] [money] NULL,
+	[Status] [nvarchar](255) NULL,
+ CONSTRAINT [BOOKING$PrimaryKey] PRIMARY KEY CLUSTERED 
+(
+	[Booking_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MOVIE]    Script Date: 2025-11-28 오후 10:11:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MOVIE](
+	[movie_id] [int] IDENTITY(1,1) NOT NULL,
+	[title] [nvarchar](max) NULL,
+	[running_time] [int] NULL,
+	[director] [nvarchar](255) NULL,
+	[genre] [nvarchar](255) NULL,
+	[rating] [nvarchar](255) NULL,
+	[release_data] [datetime2](0) NULL,
+	[SSMA_TimeStamp] [timestamp] NOT NULL,
+ CONSTRAINT [MOVIE$PrimaryKey] PRIMARY KEY CLUSTERED 
+(
+	[movie_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SCHEDULE]    Script Date: 2025-11-28 오후 10:11:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SCHEDULE](
+	[Schedule_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Movie_ID] [int] NULL,
+	[Screen_ID] [int] NULL,
+	[Start_Time] [datetime2](0) NULL,
+	[End_Time] [datetime2](0) NULL,
+	[Price] [money] NULL,
+ CONSTRAINT [SCHEDULE$PrimaryKey] PRIMARY KEY CLUSTERED 
+(
+	[Schedule_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SCREEN]    Script Date: 2025-11-28 오후 10:11:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SCREEN](
+	[Screen_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NULL,
+	[Total_Seats] [int] NULL,
+	[Rows] [int] NULL,
+	[Cols] [int] NULL,
+ CONSTRAINT [SCREEN$PrimaryKey] PRIMARY KEY CLUSTERED 
+(
+	[Screen_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[USER]    Script Date: 2025-11-28 오후 10:11:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[USER](
+	[User_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](255) NULL,
+	[Password] [nvarchar](255) NULL,
+	[Name] [nvarchar](255) NULL,
+	[Email] [nvarchar](255) NULL,
+	[Role] [nvarchar](255) NULL,
+ CONSTRAINT [USER$PrimaryKey] PRIMARY KEY CLUSTERED 
+(
+	[User_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[BOOKING] ON 
+
+INSERT [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES (1, 1, 1, N'A', N'5', CAST(N'2025-11-27T15:27:25.0000000' AS DateTime2), 0.0000, N'CANCELLED')
+INSERT [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES (2, 1, 1, N'A', N'5', CAST(N'2025-11-27T15:29:28.0000000' AS DateTime2), 15000.0000, N'CONFIRMED')
+INSERT [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES (3, 1, 1, N'A', N'5', CAST(N'2025-11-28T13:43:08.0000000' AS DateTime2), 15000.0000, N'CONFIRMED')
+INSERT [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES (4, 1, 2, N'C', N'7', CAST(N'2025-11-28T13:43:10.0000000' AS DateTime2), 14000.0000, N'CONFIRMED')
+INSERT [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES (5, 1, 2, N'C', N'8', CAST(N'2025-11-28T13:43:11.0000000' AS DateTime2), 14000.0000, N'CONFIRMED')
+SET IDENTITY_INSERT [dbo].[BOOKING] OFF
+GO
+SET IDENTITY_INSERT [dbo].[MOVIE] ON 
+
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (1, N'나우 유 씨 미 3상영중', 112, N'루빈 플레셔', N'범죄', N'12세 이상', CAST(N'2025-11-12T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (2, N'극장판 체인소 맨: 레제편', 100, N'요시하라 타츠야', N'애니메이션', N'15세 이상', CAST(N'2025-09-24T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (3, N'퍼스트 라이드', 116, N'남대중', N'코미디/드라마', N'12세 이상', CAST(N'2025-10-29T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (4, N'프레데터: 죽음의 땅', 107, N'댄 트라첸버그', N'SF/액션', N'15세 이상', CAST(N'2025-11-05T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (5, N'8번 출구', 95, N'카와무라 겐키', N'스릴러', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (6, N'코렐라인', 101, N'헨리 셀릭', N'애니메이션, 가족', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (7, N'세계의 주인', 119, N'윤가은', N'드라마', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (8, N'극장판 귀멸의 칼날: 무한성편', 155, N'소토자키 하루오', N'애니메이션', N'15세 이상', CAST(N'2025-08-22T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (9, N'부고니아', 119, N'요르고스 란티모스', N'스릴러, 코미디', N'청소년 관람불가', CAST(N'2025-11-05T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (10, N'명탐정 코난: 척안의 잔상', 110, N'시게하라 카츠야', N'애니메이션', N'12세 이상', CAST(N'2025-07-16T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (13, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (14, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (15, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (16, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (17, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+INSERT [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES (18, N'주토피아 2', 208, N'재러드 부시', N'어린이', N'전연령', CAST(N'2025-11-26T00:00:00.0000000' AS DateTime2))
+SET IDENTITY_INSERT [dbo].[MOVIE] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SCHEDULE] ON 
+
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (1, 1, 1, CAST(N'2025-12-22T20:25:00.0000000' AS DateTime2), CAST(N'2025-12-22T22:52:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (2, 1, 1, CAST(N'2025-12-23T20:25:00.0000000' AS DateTime2), CAST(N'2025-12-23T22:52:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (3, 1, 2, CAST(N'2025-12-24T10:30:00.0000000' AS DateTime2), CAST(N'2025-12-24T00:32:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (4, 2, 2, CAST(N'2025-12-22T21:50:00.0000000' AS DateTime2), CAST(N'2025-12-22T23:40:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (5, 2, 3, CAST(N'2025-12-22T11:20:00.0000000' AS DateTime2), CAST(N'2025-12-22T13:10:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (6, 2, 2, CAST(N'2025-12-23T13:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T15:20:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (7, 3, 2, CAST(N'2025-12-22T15:50:00.0000000' AS DateTime2), CAST(N'2025-12-22T17:56:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (8, 3, 2, CAST(N'2025-12-23T18:20:00.0000000' AS DateTime2), CAST(N'2025-12-23T20:26:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (9, 4, 3, CAST(N'2025-12-23T15:15:00.0000000' AS DateTime2), CAST(N'2025-12-23T17:12:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (10, 4, 3, CAST(N'2025-12-23T17:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T19:27:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (11, 5, 4, CAST(N'2025-12-24T14:00:00.0000000' AS DateTime2), CAST(N'2025-12-24T15:45:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (12, 5, 3, CAST(N'2025-12-24T16:50:00.0000000' AS DateTime2), CAST(N'2025-12-24T18:35:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (13, 5, 4, CAST(N'2025-12-25T12:00:00.0000000' AS DateTime2), CAST(N'2025-12-25T13:45:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (14, 6, 1, CAST(N'2025-12-22T09:40:00.0000000' AS DateTime2), CAST(N'2025-12-22T11:30:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (15, 6, 5, CAST(N'2025-12-23T15:20:00.0000000' AS DateTime2), CAST(N'2025-12-23T17:10:00.0000000' AS DateTime2), 17000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (16, 7, 4, CAST(N'2025-12-22T11:00:00.0000000' AS DateTime2), CAST(N'2025-12-22T13:09:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (17, 7, 2, CAST(N'2025-12-25T15:00:00.0000000' AS DateTime2), CAST(N'2025-12-25T17:09:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (18, 7, 5, CAST(N'2025-12-23T12:00:00.0000000' AS DateTime2), CAST(N'2025-12-23T14:09:00.0000000' AS DateTime2), 17000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (19, 8, 1, CAST(N'2025-12-23T13:15:00.0000000' AS DateTime2), CAST(N'2025-12-23T16:00:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (20, 8, 4, CAST(N'2025-12-24T16:20:00.0000000' AS DateTime2), CAST(N'2025-12-24T19:05:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (21, 9, 3, CAST(N'2025-12-22T23:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T01:38:00.0000000' AS DateTime2), 13000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (22, 9, 5, CAST(N'2025-12-23T23:00:00.0000000' AS DateTime2), CAST(N'2025-12-23T01:08:00.0000000' AS DateTime2), 16000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (23, 9, 2, CAST(N'2025-12-24T19:20:00.0000000' AS DateTime2), CAST(N'2025-12-24T21:28:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (24, 10, 4, CAST(N'2025-12-23T09:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T11:29:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (25, 10, 1, CAST(N'2025-12-24T17:50:00.0000000' AS DateTime2), CAST(N'2025-12-24T19:49:00.0000000' AS DateTime2), 14000.0000)
+INSERT [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES (26, 10, 3, CAST(N'2025-12-25T13:20:00.0000000' AS DateTime2), CAST(N'2025-12-25T15:19:00.0000000' AS DateTime2), 14000.0000)
+SET IDENTITY_INSERT [dbo].[SCHEDULE] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SCREEN] ON 
+
+INSERT [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES (1, N'1관', 150, 10, 15)
+INSERT [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES (2, N'2관', 100, 10, 10)
+INSERT [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES (3, N'3관', 100, 10, 10)
+INSERT [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES (4, N'4관', 80, 8, 10)
+INSERT [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES (5, N'리클라이너관', 40, 4, 10)
+SET IDENTITY_INSERT [dbo].[SCREEN] OFF
+GO
+SET IDENTITY_INSERT [dbo].[USER] ON 
+
+INSERT [dbo].[USER] ([User_ID], [Username], [Password], [Name], [Email], [Role]) VALUES (1, N'kEm', N'kkeemm12', N'김직원', N'kEm@naver.com', N'관리자')
+INSERT [dbo].[USER] ([User_ID], [Username], [Password], [Name], [Email], [Role]) VALUES (2, N'testuser', N'1234', N'홍길동', NULL, N'CUSTOMER')
+SET IDENTITY_INSERT [dbo].[USER] OFF
+GO
+ALTER TABLE [dbo].[BOOKING] ADD  DEFAULT ((0)) FOR [User_ID]
+GO
+ALTER TABLE [dbo].[BOOKING] ADD  DEFAULT ((0)) FOR [Schedule_ID]
+GO
+ALTER TABLE [dbo].[BOOKING] ADD  DEFAULT ((0)) FOR [Total_Price]
+GO
+ALTER TABLE [dbo].[MOVIE] ADD  DEFAULT ((0)) FOR [running_time]
+GO
+ALTER TABLE [dbo].[SCHEDULE] ADD  DEFAULT ((0)) FOR [Movie_ID]
+GO
+ALTER TABLE [dbo].[SCHEDULE] ADD  DEFAULT ((0)) FOR [Screen_ID]
+GO
+ALTER TABLE [dbo].[SCHEDULE] ADD  DEFAULT ((0)) FOR [Price]
+GO
+ALTER TABLE [dbo].[SCREEN] ADD  DEFAULT ((0)) FOR [Total_Seats]
+GO
+ALTER TABLE [dbo].[SCREEN] ADD  DEFAULT ((0)) FOR [Rows]
+GO
+ALTER TABLE [dbo].[SCREEN] ADD  DEFAULT ((0)) FOR [Cols]
+GO
+ALTER TABLE [dbo].[BOOKING]  WITH NOCHECK ADD  CONSTRAINT [BOOKING$SCHEDULEBOOKING] FOREIGN KEY([Schedule_ID])
+REFERENCES [dbo].[SCHEDULE] ([Schedule_ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[BOOKING] CHECK CONSTRAINT [BOOKING$SCHEDULEBOOKING]
+GO
+ALTER TABLE [dbo].[BOOKING]  WITH NOCHECK ADD  CONSTRAINT [BOOKING$USERBOOKING] FOREIGN KEY([User_ID])
+REFERENCES [dbo].[USER] ([User_ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[BOOKING] CHECK CONSTRAINT [BOOKING$USERBOOKING]
+GO
+ALTER TABLE [dbo].[SCHEDULE]  WITH NOCHECK ADD  CONSTRAINT [SCHEDULE$SCREENSCHEDULE] FOREIGN KEY([Screen_ID])
+REFERENCES [dbo].[SCREEN] ([Screen_ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[SCHEDULE] CHECK CONSTRAINT [SCHEDULE$SCREENSCHEDULE]
+GO
+ALTER TABLE [dbo].[MOVIE]  WITH NOCHECK ADD  CONSTRAINT [SSMA_CC$MOVIE$director$disallow_zero_length] CHECK  ((len([director])>(0)))
+GO
+ALTER TABLE [dbo].[MOVIE] CHECK CONSTRAINT [SSMA_CC$MOVIE$director$disallow_zero_length]
+GO
+ALTER TABLE [dbo].[MOVIE]  WITH NOCHECK ADD  CONSTRAINT [SSMA_CC$MOVIE$genre$disallow_zero_length] CHECK  ((len([genre])>(0)))
+GO
+ALTER TABLE [dbo].[MOVIE] CHECK CONSTRAINT [SSMA_CC$MOVIE$genre$disallow_zero_length]
+GO
+ALTER TABLE [dbo].[MOVIE]  WITH NOCHECK ADD  CONSTRAINT [SSMA_CC$MOVIE$title$disallow_zero_length] CHECK  ((len([title])>(0)))
+GO
+ALTER TABLE [dbo].[MOVIE] CHECK CONSTRAINT [SSMA_CC$MOVIE$title$disallow_zero_length]
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매 고유 번호 (PK)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Booking_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Booking_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Booking_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매한 사용자 ID (FK: USER)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'User_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[User_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'User_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매한 상영 일정 ID (FK: SCHEDULE)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Schedule_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Schedule_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Schedule_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매된 좌석 행' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Seat_Row'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Seat_Row]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Seat_Row'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매된 좌석 열' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Seat_Col'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Seat_Col]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Seat_Col'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매된 시각' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Booking_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Booking_Time]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Booking_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'최종 결제 금액' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Total_Price'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Total_Price]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Total_Price'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'예매 상태 (''PAID'', ''CANCELLED'' 등)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Status'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[Status]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'COLUMN',@level2name=N'Status'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING].[PrimaryKey]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING', @level2type=N'CONSTRAINT',@level2name=N'BOOKING$PrimaryKey'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[BOOKING]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BOOKING'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'영화 고유 번호' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'movie_id'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[movie_id]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'movie_id'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'영화 제목' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'title'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[title]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'title'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영 시간' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'running_time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[running_time]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'running_time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'감독 이름' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'director'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[director]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'director'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'장르' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'genre'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[genre]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'genre'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'관람 등급' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'rating'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[rating]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'rating'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'개봉일' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'release_data'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[release_data]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'COLUMN',@level2name=N'release_data'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE].[PrimaryKey]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE', @level2type=N'CONSTRAINT',@level2name=N'MOVIE$PrimaryKey'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[MOVIE]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'MOVIE'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영 일정 고유 번호 (PK)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Schedule_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[Schedule_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Schedule_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영할 영화 ID (FK: MOVIE)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Movie_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[Movie_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Movie_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영관 ID (FK: SCREEN)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Screen_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[Screen_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Screen_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영 시작 시간' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Start_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[Start_Time]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Start_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영 종료 시간' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'End_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[End_Time]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'End_Time'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'티켓 가격' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Price'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[Price]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'COLUMN',@level2name=N'Price'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE].[PrimaryKey]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE', @level2type=N'CONSTRAINT',@level2name=N'SCHEDULE$PrimaryKey'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCHEDULE]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCHEDULE'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영관 고유 번호' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Screen_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[Screen_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Screen_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상영관 이름' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[Name]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'전체 좌석 수' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Total_Seats'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[Total_Seats]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Total_Seats'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'좌석 행 수' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Rows'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[Rows]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Rows'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'좌석 열 수' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Cols'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[Cols]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'COLUMN',@level2name=N'Cols'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN].[PrimaryKey]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN', @level2type=N'CONSTRAINT',@level2name=N'SCREEN$PrimaryKey'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[SCREEN]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'SCREEN'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'사용자 고유 번호(PK)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'User_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[User_ID]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'User_ID'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'로그인 ID' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Username'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[Username]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Username'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'비밀번호' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Password'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[Password]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Password'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'사용자 이름' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[Name]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'이메일 주소' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Email'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[Email]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Email'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'사용자 역할(Customer/Admin)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Role'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[Role]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'COLUMN',@level2name=N'Role'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER].[PrimaryKey]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER', @level2type=N'CONSTRAINT',@level2name=N'USER$PrimaryKey'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'Theater.[USER]' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'USER'
+GO
