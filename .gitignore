@@ -1,0 +1,31 @@
+# NetBeans 빌드 파일
+/dist/
+/build/
+/nbproject/private/
+
+# 컴파일된 클래스 파일
+*.class
+
+# 로그 파일
+*.log
+
+# IDE 설정 파일
+.idea/
+.vscode/
+*.iml
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db
+
+# 데이터베이스 파일 (민감 정보 포함)
+*.accdb
+*.mdb
+
+# JAR 파일 (lib 폴더 제외 - 프로젝트에서 사용)
+# lib/ 폴더는 필요하므로 제외하지 않음
+
+# 이미지 파일은 포함 (포스터 이미지)
+
+# 설정 파일 (비밀번호 포함 가능)
+# DatabaseConnection.java에 실제 비밀번호가 있다면 주의 필요

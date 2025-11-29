@@ -26,6 +26,13 @@
             <artifactId>ucanaccess</artifactId>
             <version>5.0.1</version>
         </dependency>
+        
+        <!-- MS-SQL JDBC 드라이버 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>13.2.1.jre11</version>
+        </dependency>
     </dependencies>
     
     <build>

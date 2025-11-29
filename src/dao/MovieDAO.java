@@ -18,13 +18,29 @@ public class MovieDAO {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT * FROM MOVIE";
         
+        System.out.println("[MovieDAO] 쿼리 실행: " + sql);
+        
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
+            int count = 0;
             while (rs.next()) {
-                movies.add(mapResultSetToMovie(rs));
+                try {
+                    movies.add(mapResultSetToMovie(rs));
+                    count++;
+                } catch (SQLException e) {
+                    System.err.println("[MovieDAO] 영화 데이터 변환 오류 (행 " + count + "): " + e.getMessage());
+                    e.printStackTrace();
+                    throw e;
+                }
             }
+            System.out.println("[MovieDAO] 조회된 영화 개수: " + count);
+        } catch (SQLException e) {
+            System.err.println("[MovieDAO] SQL 오류 발생: " + e.getMessage());
+            System.err.println("SQL 상태: " + e.getSQLState());
+            System.err.println("에러 코드: " + e.getErrorCode());
+            throw e;
         }
         
         return movies;
