@@ -1,8 +1,5 @@
 package model;
 
-/**
- * USER 테이블에 해당하는 모델 클래스
- */
 public class User {
     private Integer userId;
     private String username;
@@ -22,8 +19,7 @@ public class User {
         this.email = email;
         this.role = role;
     }
-    
-    // Getters and Setters
+
     public Integer getUserId() {
         return userId;
     }
@@ -83,7 +79,4 @@ public class User {
                 '}';
     }
 }
-
-
-
 

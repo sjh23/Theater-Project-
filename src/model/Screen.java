@@ -1,8 +1,5 @@
 package model;
 
-/**
- * SCREEN 테이블에 해당하는 모델 클래스
- */
 public class Screen {
     private Integer screenId;
     private String name;
@@ -20,8 +17,7 @@ public class Screen {
         this.rows = rows;
         this.cols = cols;
     }
-    
-    // Getters and Setters
+
     public Integer getScreenId() {
         return screenId;
     }
@@ -73,7 +69,4 @@ public class Screen {
                 '}';
     }
 }
-
-
-
 

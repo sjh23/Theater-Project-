@@ -2,9 +2,6 @@ package model;
 
 import java.sql.Timestamp;
 
-/**
- * MOVIE 테이블에 해당하는 모델 클래스
- */
 public class Movie {
     private Integer movieId;
     private String title;
@@ -27,8 +24,7 @@ public class Movie {
         this.rating = rating;
         this.releaseDate = releaseDate;
     }
-    
-    // Getters and Setters
+
     public Integer getMovieId() {
         return movieId;
     }
@@ -98,7 +94,4 @@ public class Movie {
                 '}';
     }
 }
-
-
-
 

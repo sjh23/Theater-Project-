@@ -2,9 +2,6 @@ package model;
 
 import java.sql.Timestamp;
 
-/**
- * SCHEDULE 테이블에 해당하는 모델 클래스
- */
 public class Schedule {
     private Integer scheduleId;
     private Integer movieId;
@@ -25,8 +22,7 @@ public class Schedule {
         this.endTime = endTime;
         this.price = price;
     }
-    
-    // Getters and Setters
+
     public Integer getScheduleId() {
         return scheduleId;
     }
@@ -87,7 +83,4 @@ public class Schedule {
                 '}';
     }
 }
-
-
-
 

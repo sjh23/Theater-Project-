@@ -2,9 +2,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Access DB의 테이블 구조를 분석하는 유틸리티 클래스
- */
 public class DatabaseAnalyzer {
     
     private static final String DB_PATH = "C:\\Users\\User\\OneDrive\\바탕 화면\\Theater.accdb";
@@ -16,7 +13,7 @@ public class DatabaseAnalyzer {
     public static void analyzeDatabase() {
         Connection conn = null;
         try {
-            // UCanAccess JDBC 드라이버 로드 시도
+
             try {
                 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             } catch (ClassNotFoundException e) {
@@ -43,9 +40,7 @@ public class DatabaseAnalyzer {
                 System.err.println("==========================================");
                 return;
             }
-            
-            // UCanAccess JDBC 드라이버 사용
-            // 여러 연결 문자열 옵션 시도
+
             String[] connectionStrings = {
                 "jdbc:ucanaccess://" + DB_PATH + ";memory=false;ignoreCase=true",
                 "jdbc:ucanaccess://" + DB_PATH + ";memory=false",
@@ -84,8 +79,7 @@ public class DatabaseAnalyzer {
             System.out.println("데이터베이스 제품명: " + metaData.getDatabaseProductName());
             System.out.println("드라이버명: " + metaData.getDriverName());
             System.out.println("\n");
-            
-            // 모든 테이블 목록 가져오기
+
             System.out.println("=== 테이블 목록 ===");
             ResultSet tables = metaData.getTables(null, null, null, new String[]{"TABLE"});
             List<String> tableNames = new ArrayList<>();
@@ -97,8 +91,7 @@ public class DatabaseAnalyzer {
             }
             tables.close();
             System.out.println("\n");
-            
-            // 각 테이블의 컬럼 정보 출력
+
             for (String tableName : tableNames) {
                 System.out.println("=== 테이블: " + tableName + " ===");
                 ResultSet columns = metaData.getColumns(null, null, tableName, null);
@@ -120,8 +113,7 @@ public class DatabaseAnalyzer {
                 columns.close();
                 System.out.println("\n");
             }
-            
-            // 외래키 관계 정보
+
             System.out.println("=== 외래키 관계 ===");
             for (String tableName : tableNames) {
                 ResultSet foreignKeys = metaData.getImportedKeys(null, null, tableName);
@@ -148,8 +140,7 @@ public class DatabaseAnalyzer {
             System.err.println("==========================================");
             System.err.println("오류 메시지: " + e.getMessage());
             System.err.println("\n");
-            
-            // Functions 관련 오류인 경우 특별 안내
+
             if (e.getMessage() != null && e.getMessage().contains("Functions")) {
                 System.err.println("이 오류는 UCanAccess와 HSQLDB 버전 호환성 문제일 수 있습니다.");
                 System.err.println("\n해결 방법:");

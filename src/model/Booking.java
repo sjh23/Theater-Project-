@@ -2,9 +2,6 @@ package model;
 
 import java.sql.Timestamp;
 
-/**
- * BOOKING 테이블에 해당하는 모델 클래스
- */
 public class Booking {
     private Integer bookingId;
     private Integer userId;
@@ -30,8 +27,7 @@ public class Booking {
         this.totalPrice = totalPrice;
         this.status = status;
     }
-    
-    // Getters and Setters
+
     public Integer getBookingId() {
         return bookingId;
     }
@@ -110,7 +106,4 @@ public class Booking {
                 '}';
     }
 }
-
-
-
 

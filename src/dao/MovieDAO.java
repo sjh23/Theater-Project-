@@ -6,14 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * MOVIE 테이블에 대한 데이터 접근 객체
- */
 public class MovieDAO {
-    
-    /**
-     * 모든 영화를 조회합니다.
-     */
+
     public List<Movie> getAllMovies() throws SQLException {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT * FROM MOVIE";
@@ -45,10 +39,7 @@ public class MovieDAO {
         
         return movies;
     }
-    
-    /**
-     * 영화 ID로 영화를 조회합니다.
-     */
+
     public Movie getMovieById(Integer movieId) throws SQLException {
         String sql = "SELECT * FROM MOVIE WHERE movie_id = ?";
         
@@ -66,10 +57,7 @@ public class MovieDAO {
         
         return null;
     }
-    
-    /**
-     * 장르로 영화를 조회합니다.
-     */
+
     public List<Movie> getMoviesByGenre(String genre) throws SQLException {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT * FROM MOVIE WHERE genre = ?";
@@ -88,10 +76,7 @@ public class MovieDAO {
         
         return movies;
     }
-    
-    /**
-     * 제목으로 영화를 검색합니다.
-     */
+
     public List<Movie> searchMoviesByTitle(String keyword) throws SQLException {
         List<Movie> movies = new ArrayList<>();
         String sql = "SELECT * FROM MOVIE WHERE title LIKE ?";
@@ -110,10 +95,7 @@ public class MovieDAO {
         
         return movies;
     }
-    
-    /**
-     * 새 영화를 추가합니다.
-     */
+
     public boolean insertMovie(Movie movie) throws SQLException {
         String sql = "INSERT INTO MOVIE (title, running_time, director, genre, rating, release_data) VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -141,10 +123,7 @@ public class MovieDAO {
         
         return false;
     }
-    
-    /**
-     * 영화 정보를 업데이트합니다.
-     */
+
     public boolean updateMovie(Movie movie) throws SQLException {
         String sql = "UPDATE MOVIE SET title = ?, running_time = ?, director = ?, genre = ?, rating = ?, release_data = ? WHERE movie_id = ?";
         
@@ -162,10 +141,7 @@ public class MovieDAO {
             return pstmt.executeUpdate() > 0;
         }
     }
-    
-    /**
-     * 영화를 삭제합니다.
-     */
+
     public boolean deleteMovie(Integer movieId) throws SQLException {
         String sql = "DELETE FROM MOVIE WHERE movie_id = ?";
         
@@ -177,10 +153,7 @@ public class MovieDAO {
             return pstmt.executeUpdate() > 0;
         }
     }
-    
-    /**
-     * ResultSet을 Movie 객체로 변환합니다.
-     */
+
     private Movie mapResultSetToMovie(ResultSet rs) throws SQLException {
         Movie movie = new Movie();
         movie.setMovieId(rs.getInt("movie_id"));
