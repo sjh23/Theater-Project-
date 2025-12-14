@@ -1,0 +1,253 @@
+USE [Theater]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'USER' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[USER](
+        [User_ID] [int] IDENTITY(1,1) NOT NULL,
+        [Username] [nvarchar](255) NULL,
+        [Password] [nvarchar](255) NULL,
+        [Name] [nvarchar](255) NULL,
+        [Email] [nvarchar](255) NULL,
+        [Role] [nvarchar](255) NULL,
+        CONSTRAINT [USER$PrimaryKey] PRIMARY KEY CLUSTERED ([User_ID] ASC)
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+              ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'MOVIE' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[MOVIE](
+        [movie_id] [int] IDENTITY(1,1) NOT NULL,
+        [title] [nvarchar](max) NULL,
+        [running_time] [int] NULL,
+        [director] [nvarchar](255) NULL,
+        [genre] [nvarchar](255) NULL,
+        [rating] [nvarchar](255) NULL,
+        [release_data] [datetime2](0) NULL,
+        [SSMA_TimeStamp] [timestamp] NOT NULL,
+        CONSTRAINT [MOVIE$PrimaryKey] PRIMARY KEY CLUSTERED ([movie_id] ASC)
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+              ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SCREEN' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[SCREEN](
+        [Screen_ID] [int] IDENTITY(1,1) NOT NULL,
+        [Name] [nvarchar](255) NULL,
+        [Total_Seats] [int] NULL,
+        [Rows] [int] NULL,
+        [Cols] [int] NULL,
+        CONSTRAINT [SCREEN$PrimaryKey] PRIMARY KEY CLUSTERED ([Screen_ID] ASC)
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+              ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SCHEDULE' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[SCHEDULE](
+        [Schedule_ID] [int] IDENTITY(1,1) NOT NULL,
+        [Movie_ID] [int] NULL,
+        [Screen_ID] [int] NULL,
+        [Start_Time] [datetime2](0) NULL,
+        [End_Time] [datetime2](0) NULL,
+        [Price] [money] NULL,
+        CONSTRAINT [SCHEDULE$PrimaryKey] PRIMARY KEY CLUSTERED ([Schedule_ID] ASC)
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+              ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'BOOKING' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[BOOKING](
+        [Booking_ID] [int] IDENTITY(1,1) NOT NULL,
+        [User_ID] [int] NULL,
+        [Schedule_ID] [int] NULL,
+        [Seat_Row] [nvarchar](255) NULL,
+        [Seat_Col] [nvarchar](255) NULL,
+        [Booking_Time] [datetime2](0) NULL,
+        [Total_Price] [money] NULL,
+        [Status] [nvarchar](255) NULL,
+        CONSTRAINT [BOOKING$PrimaryKey] PRIMARY KEY CLUSTERED ([Booking_ID] ASC)
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+              ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_BOOKING_User_ID')
+    ALTER TABLE [dbo].[BOOKING] ADD DEFAULT ((0)) FOR [User_ID];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_BOOKING_Schedule_ID')
+    ALTER TABLE [dbo].[BOOKING] ADD DEFAULT ((0)) FOR [Schedule_ID];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_BOOKING_Total_Price')
+    ALTER TABLE [dbo].[BOOKING] ADD DEFAULT ((0)) FOR [Total_Price];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_MOVIE_running_time')
+    ALTER TABLE [dbo].[MOVIE] ADD DEFAULT ((0)) FOR [running_time];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCHEDULE_Movie_ID')
+    ALTER TABLE [dbo].[SCHEDULE] ADD DEFAULT ((0)) FOR [Movie_ID];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCHEDULE_Screen_ID')
+    ALTER TABLE [dbo].[SCHEDULE] ADD DEFAULT ((0)) FOR [Screen_ID];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCHEDULE_Price')
+    ALTER TABLE [dbo].[SCHEDULE] ADD DEFAULT ((0)) FOR [Price];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCREEN_Total_Seats')
+    ALTER TABLE [dbo].[SCREEN] ADD DEFAULT ((0)) FOR [Total_Seats];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCREEN_Rows')
+    ALTER TABLE [dbo].[SCREEN] ADD DEFAULT ((0)) FOR [Rows];
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_SCREEN_Cols')
+    ALTER TABLE [dbo].[SCREEN] ADD DEFAULT ((0)) FOR [Cols];
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE name = 'SSMA_CC$MOVIE$director$disallow_zero_length')
+    ALTER TABLE [dbo].[MOVIE] WITH NOCHECK ADD CONSTRAINT [SSMA_CC$MOVIE$director$disallow_zero_length] 
+    CHECK ((len([director])>(0)));
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE name = 'SSMA_CC$MOVIE$genre$disallow_zero_length')
+    ALTER TABLE [dbo].[MOVIE] WITH NOCHECK ADD CONSTRAINT [SSMA_CC$MOVIE$genre$disallow_zero_length] 
+    CHECK ((len([genre])>(0)));
+IF NOT EXISTS (SELECT * FROM sys.check_constraints WHERE name = 'SSMA_CC$MOVIE$title$disallow_zero_length')
+    ALTER TABLE [dbo].[MOVIE] WITH NOCHECK ADD CONSTRAINT [SSMA_CC$MOVIE$title$disallow_zero_length] 
+    CHECK ((len([title])>(0)));
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'SCHEDULE$MOVIESCHEDULE')
+BEGIN
+    ALTER TABLE [dbo].[SCHEDULE] WITH NOCHECK ADD CONSTRAINT [SCHEDULE$MOVIESCHEDULE] 
+    FOREIGN KEY([Movie_ID]) REFERENCES [dbo].[MOVIE] ([movie_id])
+    ON UPDATE CASCADE ON DELETE CASCADE;
+    ALTER TABLE [dbo].[SCHEDULE] CHECK CONSTRAINT [SCHEDULE$MOVIESCHEDULE];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'SCHEDULE$SCREENSCHEDULE')
+BEGIN
+    ALTER TABLE [dbo].[SCHEDULE] WITH NOCHECK ADD CONSTRAINT [SCHEDULE$SCREENSCHEDULE] 
+    FOREIGN KEY([Screen_ID]) REFERENCES [dbo].[SCREEN] ([Screen_ID])
+    ON UPDATE CASCADE ON DELETE CASCADE;
+    ALTER TABLE [dbo].[SCHEDULE] CHECK CONSTRAINT [SCHEDULE$SCREENSCHEDULE];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'BOOKING$SCHEDULEBOOKING')
+BEGIN
+    ALTER TABLE [dbo].[BOOKING] WITH NOCHECK ADD CONSTRAINT [BOOKING$SCHEDULEBOOKING] 
+    FOREIGN KEY([Schedule_ID]) REFERENCES [dbo].[SCHEDULE] ([Schedule_ID])
+    ON UPDATE CASCADE ON DELETE CASCADE;
+    ALTER TABLE [dbo].[BOOKING] CHECK CONSTRAINT [BOOKING$SCHEDULEBOOKING];
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'BOOKING$USERBOOKING')
+BEGIN
+    ALTER TABLE [dbo].[BOOKING] WITH NOCHECK ADD CONSTRAINT [BOOKING$USERBOOKING] 
+    FOREIGN KEY([User_ID]) REFERENCES [dbo].[USER] ([User_ID])
+    ON UPDATE CASCADE ON DELETE CASCADE;
+    ALTER TABLE [dbo].[BOOKING] CHECK CONSTRAINT [BOOKING$USERBOOKING];
+END
+GO
+
+SET IDENTITY_INSERT [dbo].[SCREEN] ON;
+GO
+
+DELETE FROM [dbo].[SCREEN];
+INSERT INTO [dbo].[SCREEN] ([Screen_ID], [Name], [Total_Seats], [Rows], [Cols]) VALUES
+(1, N'1관', 150, 10, 15),
+(2, N'2관', 100, 10, 10),
+(3, N'3관', 100, 10, 10),
+(4, N'4관', 80, 8, 10),
+(5, N'리클라이너관', 40, 4, 10);
+
+SET IDENTITY_INSERT [dbo].[SCREEN] OFF;
+GO
+
+SET IDENTITY_INSERT [dbo].[USER] ON;
+GO
+
+DELETE FROM [dbo].[USER];
+INSERT INTO [dbo].[USER] ([User_ID], [Username], [Password], [Name], [Email], [Role]) VALUES
+(1, N'kEm', N'kkeemm12', N'김직원', N'kEm@naver.com', N'관리자'),
+(2, N'testuser', N'1234', N'홍길동', NULL, N'CUSTOMER');
+
+SET IDENTITY_INSERT [dbo].[USER] OFF;
+GO
+
+SET IDENTITY_INSERT [dbo].[MOVIE] ON;
+GO
+
+DELETE FROM [dbo].[MOVIE];
+INSERT INTO [dbo].[MOVIE] ([movie_id], [title], [running_time], [director], [genre], [rating], [release_data]) VALUES
+(1, N'나우 유 씨 미 3상영중', 112, N'루빈 플레셔', N'범죄', N'12세 이상', CAST(N'2025-11-12T00:00:00.0000000' AS DateTime2)),
+(2, N'극장판 체인소 맨: 레제편', 100, N'요시하라 타츠야', N'애니메이션', N'15세 이상', CAST(N'2025-09-24T00:00:00.0000000' AS DateTime2)),
+(3, N'퍼스트 라이드', 116, N'남대중', N'코미디/드라마', N'12세 이상', CAST(N'2025-10-29T00:00:00.0000000' AS DateTime2)),
+(4, N'프레데터: 죽음의 땅', 107, N'댄 트라첸버그', N'SF/액션', N'15세 이상', CAST(N'2025-11-05T00:00:00.0000000' AS DateTime2)),
+(5, N'8번 출구', 95, N'카와무라 겐키', N'스릴러', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2)),
+(6, N'코렐라인', 101, N'헨리 셀릭', N'애니메이션, 가족', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2)),
+(7, N'세계의 주인', 119, N'윤가은', N'드라마', N'12세 이상', CAST(N'2025-10-22T00:00:00.0000000' AS DateTime2)),
+(8, N'극장판 귀멸의 칼날: 무한성편', 155, N'소토자키 하루오', N'애니메이션', N'15세 이상', CAST(N'2025-08-22T00:00:00.0000000' AS DateTime2)),
+(9, N'부고니아', 119, N'요르고스 란티모스', N'스릴러, 코미디', N'청소년 관람불가', CAST(N'2025-11-05T00:00:00.0000000' AS DateTime2)),
+(10, N'명탐정 코난: 척안의 잔상', 110, N'시게하라 카츠야', N'애니메이션', N'12세 이상', CAST(N'2025-07-16T00:00:00.0000000' AS DateTime2));
+
+SET IDENTITY_INSERT [dbo].[MOVIE] OFF;
+GO
+
+SET IDENTITY_INSERT [dbo].[SCHEDULE] ON;
+GO
+
+DELETE FROM [dbo].[SCHEDULE];
+INSERT INTO [dbo].[SCHEDULE] ([Schedule_ID], [Movie_ID], [Screen_ID], [Start_Time], [End_Time], [Price]) VALUES
+(1, 1, 1, CAST(N'2025-12-22T20:25:00.0000000' AS DateTime2), CAST(N'2025-12-22T22:52:00.0000000' AS DateTime2), 14000.0000),
+(2, 1, 1, CAST(N'2025-12-23T20:25:00.0000000' AS DateTime2), CAST(N'2025-12-23T22:52:00.0000000' AS DateTime2), 14000.0000),
+(3, 1, 2, CAST(N'2025-12-24T10:30:00.0000000' AS DateTime2), CAST(N'2025-12-24T12:32:00.0000000' AS DateTime2), 14000.0000),
+(4, 2, 2, CAST(N'2025-12-22T21:50:00.0000000' AS DateTime2), CAST(N'2025-12-22T23:40:00.0000000' AS DateTime2), 14000.0000),
+(5, 2, 3, CAST(N'2025-12-22T11:20:00.0000000' AS DateTime2), CAST(N'2025-12-22T13:10:00.0000000' AS DateTime2), 14000.0000),
+(6, 2, 2, CAST(N'2025-12-23T13:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T15:20:00.0000000' AS DateTime2), 14000.0000),
+(7, 3, 2, CAST(N'2025-12-22T15:50:00.0000000' AS DateTime2), CAST(N'2025-12-22T17:56:00.0000000' AS DateTime2), 14000.0000),
+(8, 3, 2, CAST(N'2025-12-23T18:20:00.0000000' AS DateTime2), CAST(N'2025-12-23T20:26:00.0000000' AS DateTime2), 14000.0000),
+(9, 4, 3, CAST(N'2025-12-23T15:15:00.0000000' AS DateTime2), CAST(N'2025-12-23T17:12:00.0000000' AS DateTime2), 14000.0000),
+(10, 4, 3, CAST(N'2025-12-23T17:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T19:27:00.0000000' AS DateTime2), 14000.0000),
+(11, 5, 4, CAST(N'2025-12-24T14:00:00.0000000' AS DateTime2), CAST(N'2025-12-24T15:45:00.0000000' AS DateTime2), 14000.0000),
+(12, 5, 3, CAST(N'2025-12-24T16:50:00.0000000' AS DateTime2), CAST(N'2025-12-24T18:35:00.0000000' AS DateTime2), 14000.0000),
+(13, 5, 4, CAST(N'2025-12-25T12:00:00.0000000' AS DateTime2), CAST(N'2025-12-25T13:45:00.0000000' AS DateTime2), 14000.0000),
+(14, 6, 1, CAST(N'2025-12-22T09:40:00.0000000' AS DateTime2), CAST(N'2025-12-22T11:30:00.0000000' AS DateTime2), 14000.0000),
+(15, 6, 5, CAST(N'2025-12-23T15:20:00.0000000' AS DateTime2), CAST(N'2025-12-23T17:10:00.0000000' AS DateTime2), 17000.0000),
+(16, 7, 4, CAST(N'2025-12-22T11:00:00.0000000' AS DateTime2), CAST(N'2025-12-22T13:09:00.0000000' AS DateTime2), 14000.0000),
+(17, 7, 2, CAST(N'2025-12-25T15:00:00.0000000' AS DateTime2), CAST(N'2025-12-25T17:09:00.0000000' AS DateTime2), 14000.0000),
+(18, 7, 5, CAST(N'2025-12-23T12:00:00.0000000' AS DateTime2), CAST(N'2025-12-23T14:09:00.0000000' AS DateTime2), 17000.0000),
+(19, 8, 1, CAST(N'2025-12-23T13:15:00.0000000' AS DateTime2), CAST(N'2025-12-23T16:00:00.0000000' AS DateTime2), 14000.0000),
+(20, 8, 4, CAST(N'2025-12-24T16:20:00.0000000' AS DateTime2), CAST(N'2025-12-24T19:05:00.0000000' AS DateTime2), 14000.0000),
+(21, 9, 3, CAST(N'2025-12-22T23:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T01:38:00.0000000' AS DateTime2), 13000.0000),
+(22, 9, 5, CAST(N'2025-12-23T23:00:00.0000000' AS DateTime2), CAST(N'2025-12-24T01:08:00.0000000' AS DateTime2), 16000.0000),
+(23, 9, 2, CAST(N'2025-12-24T19:20:00.0000000' AS DateTime2), CAST(N'2025-12-24T21:28:00.0000000' AS DateTime2), 14000.0000),
+(24, 10, 4, CAST(N'2025-12-23T09:30:00.0000000' AS DateTime2), CAST(N'2025-12-23T11:29:00.0000000' AS DateTime2), 14000.0000),
+(25, 10, 1, CAST(N'2025-12-24T17:50:00.0000000' AS DateTime2), CAST(N'2025-12-24T19:49:00.0000000' AS DateTime2), 14000.0000),
+(26, 10, 3, CAST(N'2025-12-25T13:20:00.0000000' AS DateTime2), CAST(N'2025-12-25T15:19:00.0000000' AS DateTime2), 14000.0000);
+
+SET IDENTITY_INSERT [dbo].[SCHEDULE] OFF;
+GO
+
+SET IDENTITY_INSERT [dbo].[BOOKING] ON;
+GO
+
+DELETE FROM [dbo].[BOOKING];
+INSERT INTO [dbo].[BOOKING] ([Booking_ID], [User_ID], [Schedule_ID], [Seat_Row], [Seat_Col], [Booking_Time], [Total_Price], [Status]) VALUES
+(1, 1, 1, N'A', N'5', CAST(N'2025-11-27T15:27:25.0000000' AS DateTime2), 0.0000, N'CANCELLED'),
+(2, 1, 1, N'A', N'5', CAST(N'2025-11-27T15:29:28.0000000' AS DateTime2), 15000.0000, N'CONFIRMED'),
+(3, 1, 1, N'A', N'5', CAST(N'2025-11-28T13:43:08.0000000' AS DateTime2), 15000.0000, N'CONFIRMED'),
+(4, 1, 2, N'C', N'7', CAST(N'2025-11-28T13:43:10.0000000' AS DateTime2), 14000.0000, N'CONFIRMED'),
+(5, 1, 2, N'C', N'8', CAST(N'2025-11-28T13:43:11.0000000' AS DateTime2), 14000.0000, N'CONFIRMED');
+
+SET IDENTITY_INSERT [dbo].[BOOKING] OFF;
+GO
