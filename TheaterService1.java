@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class TheaterService {
     // 1. 보안 취약점: 하드코딩된 DB 비밀번호 (CodeRabbit이 지적할 포인트)
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/theater";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/theater";;
     private static final String DB_USER = "admin";
     private static final String DB_PASS = "12345678"; // 취약한 비밀번호
 
